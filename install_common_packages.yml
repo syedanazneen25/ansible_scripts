@@ -1,0 +1,18 @@
+---
+- name: To install multiple packages simultaneously
+  hosts: localhost
+  become: true
+  gather_facts: false
+  vars:
+    common_packages:
+      - curl
+      - git
+      - vim
+  tasks:
+    - name: To install packages
+      ansible.builtin.package:
+        name: "{{item}}"
+        state: present
+      loop: "{{common_packages}}"
+
+
