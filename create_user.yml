@@ -1,0 +1,17 @@
+---
+- name: To create a sudo user
+  hosts: localhost
+  become: true
+  gather_facts: false
+
+  vars:
+    user_name: devops
+
+  tasks:
+    - name: To create a user with sudo permissions
+      ansible.builtin.user:
+        name: "{{ user_name }}"
+        create_home: true
+        groups: sudo
+        append: yes
+
