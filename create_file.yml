@@ -1,0 +1,17 @@
+---
+- name: To create a file and add text to it.
+  hosts: localhost
+  become: true
+  gather_facts: false
+  tasks:
+    - name: To create a file
+      ansible.builtin.file:
+        path: /tmp/welcome.txt
+        state: present
+        mode: '0644'
+    - name: Add a line to a file.
+      ansible.builtin.lineinfile:
+        path: /tmp/welcome.txt
+        line: "Welcome to Ansible practice, Nazneen!"
+
+
