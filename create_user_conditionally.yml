@@ -1,0 +1,21 @@
+---
+- name: To add user conditionally
+  hosts: localhost
+  become: true
+  gather_facts: false
+
+  vars:
+    username: ansibleuser
+
+  tasks:
+    - name: Check for user
+      ansible.builtin.command: id "{{ username }}"
+      register: userinfo
+      ignore_errors: true
+
+    - name: Add a user
+      ansible.builtin.user:
+        name: "{{ username }}"
+        create_home: true
+      when: userinfo.rc != 0
+
