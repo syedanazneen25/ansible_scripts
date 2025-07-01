@@ -1,0 +1,22 @@
+---
+- name: To introduce handlers in Ansible
+  hosts: localhost
+  become: true
+  gather_facts: false
+  tasks:
+    - name: To install apache2
+      ansible.builtin.package:
+        name: apache2
+        state: present
+    - name: Add a line to file /var/www/html/index.html
+      ansible.builtin.lineinfile:
+        path: /var/www/html/index.html
+        line: "Welcome to automated Apache deployment with Ansible!"
+      notify:
+        - Restart apache
+  handlers:
+    - name: Restart apache
+      ansible.builtin.service:
+        name: apache2
+        state: restarted
+
