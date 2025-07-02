@@ -1,0 +1,24 @@
+---
+- name: To create multiple users
+  hosts: localhost
+  become: true
+  gather_facts: false
+  vars:
+    users_list:
+      - name: alice
+        shell: /bin/bash
+        home: /home/alice
+      - name: bob
+        shell: /bin/zsh
+        home: /home/bobuser
+      - name: charlie
+        shell: /bin/bash
+        home: /custom/charlie
+  tasks:
+    - name: To create users using dictionary
+      ansible.builtin.user:
+        name: "{{item.name}}"
+        shell: "{{item.shell}}"
+        home: "{{item.home}}"
+      loop: "{{users_list}}"
+
