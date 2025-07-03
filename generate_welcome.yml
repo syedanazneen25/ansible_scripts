@@ -1,0 +1,16 @@
+---
+- name: To create a template file
+  hosts: localhost
+  become: true
+  gather_facts: false
+  tasks:
+    - name: To get username
+      ansible.builtin.command: whoami
+      register: name_result
+    - name: To create a welcome template using jinja2
+      ansible.builtin.template:
+        src: /tmp/welcome.j2
+        dest: /tmp/welcome.txt
+      vars:
+        username: "{{ name_result.stdout }}"
+
