@@ -1,0 +1,22 @@
+---
+- name: To create group and multiple users using loop and handlers
+  become: true
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Create group
+      ansible.builtin.group:
+        name: developers
+        state: present
+    - name: Create users
+      ansible.builtin.user:
+        name: "{{ item }}"
+        state: present
+        groups: "developers"
+        create_home: yes
+        shell: /bin/bash
+      loop:
+        - alice
+        - bob
+        - charlie
+
